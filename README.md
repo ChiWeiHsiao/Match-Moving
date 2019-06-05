@@ -10,7 +10,7 @@ Please wait a moment for your browser downloading all the gif results to play sm
 - Videos
 
 | Scene | 2d image | 3d model | 3d model (no texture) |
-| :--: || :--: | :--: | :--: |
+| :---: | :--: | :--: | :--: |
 | 1 | ![](result/room-2d.gif) | ![](result/room-3d.gif) | ![](result/room-3d-notexture.gif) |
 | 2 | ![](result/desk-2d.gif) | ![](result/desk-3d.gif) | ![](result/desk-3d-notexture.gif) |
 

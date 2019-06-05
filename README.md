@@ -8,9 +8,11 @@ Please wait a moment for your browser downloading all the gif results to play sm
     -  we delete those frames which are not keyframes,
     - so the below videos are composed of only keyframes instead of all frames.
 - Videos
-    - ![](result/room-2d.gif)
-    - ![](result/room-3d.gif)
-    - ![](result/room-3d-notexture.gif)
+
+| 2d image | 3d model | 3d model (no texture) |
+| :--: | :--: | :--: |
+| ![](result/room-2d.gif) | ![](result/room-3d.gif) | ![](result/room-3d-notexture.gif) |
+
 
 
 #### Results from Adobe After Effect

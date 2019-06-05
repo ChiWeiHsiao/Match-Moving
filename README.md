@@ -3,6 +3,14 @@
 Please wait a moment for your browser downloading all the gif results to play smoother.
 
 #### Results from ORB-SLAM2
+- We calibrated our camera with a simple method described in [here](https://www.oreilly.com/library/view/programming-computer-vision/9781449341916/ch04.html?fbclid=IwAR0f7qhc-c8D7RrQNjl4qOsQ_xED30K9FhtgvQwdSeZTaS4v6vtbiHiGZ-Q).
+- Because ORBSLAM2 only provides camera poses of keyframes in ```KeyFrameTrajectory.txt```,
+    -  we delete those frames which are not keyframes,
+    - so the below videos are composed of only keyframes instead of all frames.
+- Videos
+    - ![](result/room-2d.gif)
+    - ![](result/room-3d.gif)
+    - ![](result/room-3d-notexture.gif)
 
 
 #### Results from Adobe After Effect

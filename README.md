@@ -3,15 +3,18 @@
 Please wait a moment for your browser downloading all the gif results to play smoother.
 
 #### Results from ORB-SLAM2
-- We calibrated our camera with a simple method described in [here](https://www.oreilly.com/library/view/programming-computer-vision/9781449341916/ch04.html?fbclid=IwAR0f7qhc-c8D7RrQNjl4qOsQ_xED30K9FhtgvQwdSeZTaS4v6vtbiHiGZ-Q).
+- We calibrated our camera with a simple method described in [here](https://www.oreilly.com/library/view/programming-computer-vision/9781449341916/ch04.html?fbclid=IwAR0f7qhc-c8D7RrQNjl4qOsQ_xED30K9FhtgvQwdSeZTaS4v6vtbiHiGZ-Q), only considering '''cx, cy, fx, fy''' without distortion parameters.
 - Because ORBSLAM2 only provides camera poses of keyframes in ```KeyFrameTrajectory.txt```,
     -  we delete those frames which are not keyframes,
-    - so the below videos are composed of only keyframes instead of all frames.
-- Videos
+    - so the below videos are composed of only keyframes instead of all frames, and thus the videos look not smooth.
+- Implementation
+    - in '''insert3d.py''' we use opencv function to render the 3d model without texture onto the background video
+    - in '''insert3d-pygame.py''' we use pyOpenGL to render the 3d model with texture and blend the non-black region of 3D model onto the background video.
+- Results
 
-| Scene | 2d image | 3d model | 3d model (no texture) |
+| Scene | 2d image | 3d model (no texture) | 3d model |
 | :---: | :--: | :--: | :--: |
-| 1 | ![](result/room-2d.gif) | ![](result/room-3d.gif) | ![](result/room-3d-notexture.gif) |
+| 1 | ![](result/room-2d.gif) | ![](result/room-3d-notexture.gif) | ![](result/room-3d.gif) |
 
 
 

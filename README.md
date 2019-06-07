@@ -8,8 +8,8 @@ Please wait a moment for your browser downloading all the gif results to play sm
     -  we delete those frames which are not keyframes,
     - so the below videos are composed of only keyframes instead of all frames, and thus the videos look not smooth.
 - Implementation
-    - in '''insert3d.py''' we use opencv function to render the 3d model without texture onto the background video
-    - in '''insert3d-pygame.py''' we use pyOpenGL to render the 3d model with texture and blend the non-black region of 3D model onto the background video.
+    - in ```insert3d.py``` we use opencv function to render the 3d model without texture onto the background video
+    - in ```insert3d-pygame.py``` we use pyOpenGL to render the 3d model with texture and blend the non-black region of 3D model onto the background video.
 - Results
 
 | Scene | 2d image | 3d model (no texture) | 3d model |
@@ -26,4 +26,4 @@ Please wait a moment for your browser downloading all the gif results to play sm
 
 
 #### Comparison
-Anyway, Adobe AE has easy to use UI and adding any 3D model or visual effect in AE is intuitive. On the other hand, it take tones of time for us to tune the position of the inserted objects by using only pure python.
+Adobe AE has easy to use UI and adding any 3D model or visual effect in AE is intuitive. On the other hand, it take tones of time for us to tune the position of the inserted objects by using only pure python.

@@ -321,7 +321,7 @@ if __name__ == '__main__':
       # Extrinsics
       # model pose w.r.t first camera
       # t[0]=right,  t[1]=up, t[3]= -depth
-      t_model = np.array([[0, 0, -700]]).T   # fox
+      t_model = np.array([[0, 0, -500]]).T   # fox
       # t_model = np.array([[4, 5, -150]]).T   # plane
       R_model = degree2R(roll=0, pitch=0, yaw=0)
       Rt_model = np.hstack([R_model, t_model])  # [3,4]

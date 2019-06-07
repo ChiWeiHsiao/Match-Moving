@@ -21,7 +21,7 @@ def quat2mat(q):
       Rotation matrix corresponding to input quaternion *q*
     '''
     _FLOAT_EPS = np.finfo(np.float).eps
-    w, x, y, z = q
+    x, y, z, w = q
     Nq = w*w + x*x + y*y + z*z
     if Nq < _FLOAT_EPS:
         return np.eye(3)
@@ -167,7 +167,7 @@ def approx_rotation(Rt):
 
 
 
-def render(img, obj, projection, h, w, color=False):
+def render(img, obj, projection, h, w, color=False, scale=5):
     """
     Render a loaded obj model into the current video frame
     Input:
@@ -176,7 +176,7 @@ def render(img, obj, projection, h, w, color=False):
       projection: 4x4 transformation matrix
     """
     vertices = obj.vertices
-    scale_matrix = np.eye(3) * 3
+    scale_matrix = np.eye(3) * scale
     # h, w = model.shape
 
     for face in obj.faces:
@@ -218,12 +218,23 @@ if __name__ == '__main__':
     n_frames = len(poses)
 
     obj = OBJ('toyplane.obj', swapyz=True)
+    # obj = OBJ('fox.obj', swapyz=True)
 
     # Camera Intrinsics
-    im_w, im_h = 1280, 720
-    K =  np.array([ [1255.9,  0, 640],
-                    [0, 1262.28, 360],
-                    [0,       0,   1]])
+
+
+    if scene_name == 'rgbd_dataset_freiburg1_desk':
+      im_w, im_h = 640, 480
+      K =  np.array([ [517.306408,  0, 318.643040],
+                      [0, 516.469215, 255.313989],
+                      [0,       0,   1]])
+    else:
+      im_w, im_h = 1280, 720
+      K =  np.array([ [1255.9,  0, 640],
+                      [0, 1262.28, 360],
+                      [0,       0,   1]])
+
+
     # Convert K [3,3] to [4,4]
     K = np.hstack([K, np.zeros([3,1])])
     K = np.vstack([K, [0,0,0,1]])
@@ -238,7 +249,7 @@ if __name__ == '__main__':
       # Extrinsics
       # model pose w.r.t first camera
       # t_model = np.array([[250, 250, 3]]).T
-      t_model = np.array([[0, 0, -400]]).T
+      t_model = np.array([[0, 0, -500]]).T  # 14000
       R_model = degree2R(roll=0, pitch=0, yaw=0)
       Rt_model = np.hstack([R_model, t_model])  # [3,4]
       Rt_model = np.vstack([Rt_model, [0,0,0,1]])  #[4,4]
@@ -248,13 +259,14 @@ if __name__ == '__main__':
       # Rt_cam = np.linalg.inv(Rt_cam)
 
       Rt = Rt_cam @ Rt_model
+
       Rt = approx_rotation(Rt[:-1, :])
       print('Rt', Rt, end='\n\n')
       P = K @ Rt
       print('P', P, end='\n\n')
       P = P[:-1, :]  # [4,4] -> [3,4]
 
-      img = render(img, obj, P, h=0, w=0, color=False)
+      img = render(img, obj, P, h=0, w=0, color=False, scale=1)
       # img = render(img, obj, Rt_model, h=0, w=0, color=False)
 
       cv2.imshow('ImageWindow', img)
@@ -264,5 +276,6 @@ if __name__ == '__main__':
       while True:
         if cv2.waitKey(33):
           break
+      # input('Press to Continue...')
     imageio.mimsave('result/%s-3d-notexture.gif'%scene_name, result_imgs)
 

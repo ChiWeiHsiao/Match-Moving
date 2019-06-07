@@ -24,7 +24,7 @@ def quat2mat(q):
       Rotation matrix corresponding to input quaternion *q*
     '''
     _FLOAT_EPS = np.finfo(np.float).eps
-    w, x, y, z = q
+    x, y, z, w = q
     Nq = w*w + x*x + y*y + z*z
     if Nq < _FLOAT_EPS:
         return np.eye(3)
@@ -247,8 +247,8 @@ def load_and_draw_model(filename, scale=1.0):
   # set model color
   glMaterialfv(GL_FRONT,GL_AMBIENT,[0,0,0,0])
 
-  # glMaterialfv(GL_FRONT,GL_DIFFUSE,[0.5,0.75,1.0,0.0])
-  glMaterialfv(GL_FRONT,GL_DIFFUSE,[0.863,  0.569,  0.118])
+  glMaterialfv(GL_FRONT,GL_DIFFUSE,[0.5,0.75,1.0,0.0])
+  # glMaterialfv(GL_FRONT,GL_DIFFUSE,[0.863,  0.569,  0.118])
   # glMaterialfv(GL_FRONT,GL_DIFFUSE,[0.2, 0.1, 0.01])
 
   glMaterialf(GL_FRONT,GL_SHININESS, 1)
@@ -280,7 +280,7 @@ if __name__ == '__main__':
     BLEND_DIRECTRLY = True
 
 
-    scene_name = 'room'  #  bridge desk rgbd_dataset_freiburg1_desk
+    scene_name = 'desk'  #  bridge desk rgbd_dataset_freiburg1_desk
     # read file
     bg_filenames = glob.glob('../Data/%s/texture/*.bmp' %scene_name)
     bg_filenames.sort()
@@ -295,16 +295,24 @@ if __name__ == '__main__':
 
 
     bg_filenames = np.array(bg_filenames)
+    print(len(bg_filenames), len(has_pose))
     bg_filenames = bg_filenames[has_pose]
     assert(len(poses) == len(bg_filenames))
 
     n_frames = len(poses)
 
     # Camera Intrinsics
-    im_w, im_h = 1280, 720
-    K =  np.array([ [1255.9,  0, 640],
-                    [0, 1262.28, 360],
-                    [0,       0,   1]])
+    if scene_name == 'rgbd_dataset_freiburg1_desk':
+      im_w, im_h = 640, 480
+      K =  np.array([ [517.306408,  0, 318.643040],
+                      [0, 516.469215, 255.313989],
+                      [0,       0,   1]])
+    else:
+      im_w, im_h = 1280, 720
+      K =  np.array([ [1255.9,  0, 640],
+                      [0, 1262.28, 360],
+                      [0,       0,   1]])
+
     window = setup(im_w, im_h)
 
     result_imgs = []
@@ -313,9 +321,9 @@ if __name__ == '__main__':
       # Extrinsics
       # model pose w.r.t first camera
       # t[0]=right,  t[1]=up, t[3]= -depth
-      t_model = np.array([[10, 0, -100]]).T   # fox
+      t_model = np.array([[100, 30, -500]]).T   # fox
       # t_model = np.array([[4, 5, -150]]).T   # plane
-      R_model = degree2R(roll=0, pitch=0, yaw=0)
+      R_model = degree2R(roll=0, pitch=0, yaw=180)
       Rt_model = np.hstack([R_model, t_model])  # [3,4]
       Rt_model = np.vstack([Rt_model, [0,0,0,1]])  #[4,4]
       # Rt_model =  np.array([  [ 1, 0, 0,    4],
@@ -338,7 +346,7 @@ if __name__ == '__main__':
       set_projection_from_camera(K, im_w, im_h)
       set_modelview_from_camera(Rt)
 
-      load_and_draw_model('./fox.obj', scale=.1)
+      load_and_draw_model('./fox.obj', scale=1)
 
 
       outdir = 'tmp'

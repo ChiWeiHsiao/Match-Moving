@@ -20,7 +20,7 @@ def quat2mat(q):
       Rotation matrix corresponding to input quaternion *q*
     '''
     _FLOAT_EPS = np.finfo(np.float).eps
-    w, x, y, z = q
+    x, y, z, w = q
     Nq = w*w + x*x + y*y + z*z
     if Nq < _FLOAT_EPS:
         return np.eye(3)
@@ -171,7 +171,7 @@ def approx_rotation(Rt):
 
 if __name__ == '__main__':
 
-    scene_name = 'room'  # bridge desk  rgbd_dataset_freiburg1_desk
+    scene_name = 'room'  # room bridge desk  rgbd_dataset_freiburg1_desk
 
     # read file
     bg_filenames = glob.glob('../Data/%s/rgb/*.png' %scene_name)
@@ -203,14 +203,17 @@ if __name__ == '__main__':
     ], np.float32)
 
     # Camera Intrinsics
-    # im_w, im_h = 1280, 720
-    # K =  np.array([ [1255.9,  0, 640],
-    #                 [0, 1262.28, 360],
-    #                 [0,       0,   1]])
-    im_w, im_h = 640, 480
-    K =  np.array([ [517.306408,  0, 318.643040],
-                    [0, 516.469215, 255.313989],
-                    [0,       0,   1]])
+    if scene_name == 'rgbd_dataset_freiburg1_desk':
+      im_w, im_h = 640, 480
+      K =  np.array([ [517.306408,  0, 318.643040],
+                      [0, 516.469215, 255.313989],
+                      [0,       0,   1]])
+    else:
+      im_w, im_h = 1280, 720
+      K =  np.array([ [1255.9,  0, 640],
+                      [0, 1262.28, 360],
+                      [0,       0,   1]])
+
 
     # Convert K [3,3] to [4,4]
     K = np.hstack([K, np.zeros([3,1])])
@@ -226,7 +229,7 @@ if __name__ == '__main__':
       # Extrinsics
       # model pose w.r.t first camera
       # t_model = np.array([[250, 250, 3]]).T
-      t_model = np.array([[0, 0, 5000]]).T
+      t_model = np.array([[0, 0, -4000]]).T
       R_model = degree2R(roll=0, pitch=0, yaw=180)
       Rt_model = np.hstack([R_model, t_model])  # [3,4]
       Rt_model = np.vstack([Rt_model, [0,0,0,1]])  #[4,4]
@@ -239,7 +242,12 @@ if __name__ == '__main__':
       print(Rt_model)
       print(Rt_cam)
       # print('Rt', Rt, end='\n\n')
-      P = K @ np.linalg.inv(Rt_cam) @ Rt_model
+      P =  K @ Rt_cam @ Rt_model
+      # P = K @ approx_rotation(Rt_cam @ Rt_model)
+      # P = K @ approx_rotation(np.linalg.inv(Rt_cam) @ Rt_model)
+      # P = K @ np.linalg.inv(Rt_cam) @ Rt_model
+
+
       # print('P', P, end='\n\n')
       # P = P[:-1, :]  # [4,4] -> [3,4]
 

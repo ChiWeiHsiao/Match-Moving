@@ -165,7 +165,7 @@ def set_projection_from_camera(K, im_w, im_h):
   aspect = (im_w*fy)/(im_h*fx)
 
   # define the near and far clipping planes
-  near = 0.00001
+  near = 0.001
   far = 10000.0
 
   # set perspective
@@ -280,7 +280,7 @@ if __name__ == '__main__':
     BLEND_DIRECTRLY = True
 
 
-    scene_name = 'desk'  #  bridge desk rgbd_dataset_freiburg1_desk
+    scene_name = 'room'  #  bridge desk rgbd_dataset_freiburg1_desk
     # read file
     bg_filenames = glob.glob('../Data/%s/texture/*.bmp' %scene_name)
     bg_filenames.sort()
@@ -321,9 +321,9 @@ if __name__ == '__main__':
       # Extrinsics
       # model pose w.r.t first camera
       # t[0]=right,  t[1]=up, t[3]= -depth
-      t_model = np.array([[100, 30, -500]]).T   # fox
+      t_model = np.array([[0, 0, -700]]).T   # fox
       # t_model = np.array([[4, 5, -150]]).T   # plane
-      R_model = degree2R(roll=0, pitch=0, yaw=180)
+      R_model = degree2R(roll=0, pitch=0, yaw=0)
       Rt_model = np.hstack([R_model, t_model])  # [3,4]
       Rt_model = np.vstack([Rt_model, [0,0,0,1]])  #[4,4]
       # Rt_model =  np.array([  [ 1, 0, 0,    4],

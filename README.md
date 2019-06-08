@@ -3,7 +3,8 @@
 Please wait a moment for your browser downloading all the gif results to play smoother.
 
 #### Results from ORB-SLAM2
-- We calibrated our camera with a simple method described in [here](https://www.oreilly.com/library/view/programming-computer-vision/9781449341916/ch04.html?fbclid=IwAR0f7qhc-c8D7RrQNjl4qOsQ_xED30K9FhtgvQwdSeZTaS4v6vtbiHiGZ-Q), only considering '''cx, cy, fx, fy''' without distortion parameters.
+- We calibrated our camera with a simple method described in [here](https://www.oreilly.com/library/view/programming-computer-vision/9781449341916/ch04.html?fbclid=IwAR0f7qhc-c8D7RrQNjl4qOsQ_xED30K9FhtgvQwdSeZTaS4v6vtbiHiGZ-Q), only considering ```cx, cy, fx, fy``` without distortion parameters.
+    - The camera intrinsic of iPhone7 video mode is in ```iphone.yaml```.
 - Because ORBSLAM2 only provides camera poses of keyframes in ```KeyFrameTrajectory.txt```,
     -  we delete those frames which are not keyframes,
     - so the below videos are composed of only keyframes instead of all frames, and thus the videos look not smooth.
@@ -26,4 +27,6 @@ Please wait a moment for your browser downloading all the gif results to play sm
 
 
 #### Comparison
-Adobe AE has easy to use UI and adding any 3D model or visual effect in AE is intuitive. On the other hand, it take tones of time for us to tune the position of the inserted objects by using only pure python.
+- Adobe AE has easy to use UI and adding any 3D model or visual effect in AE is intuitive. 
+- On the other hand, it take tones of time for us to tune the position of the inserted objects by using only pure python.
+- Besides, how to get the camera pose of non-keyframes from ORB-SLAM2 is an issue, maybe interpolating between adjecent transformation matrixs based on timestamps could solve the problem.

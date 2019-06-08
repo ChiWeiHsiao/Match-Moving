@@ -13,9 +13,9 @@ Please wait a moment for your browser downloading all the gif results to play sm
     - in ```insert3d-pygame.py``` we use pyOpenGL to render the 3d model with texture and blend the non-black region of 3D model onto the background video.
 - Results
 
-| Scene | 2d image | 3d model (no texture) | 3d model |
-| :---: | :--: | :--: | :--: |
-| 1 | ![](result/room-2d.gif) | ![](result/room-3d-notexture.gif) | ![](result/room-3d.gif) |
+| 2d image (Rilakkuma) | 3d model-no-texture (pink toyplane) | 3d model (blue fox) |
+| :--: | :--: | :--: |
+| ![](result/room-2d.gif) | ![](result/room-3d-notexture.gif) | ![](result/room-3d.gif) |
 
 
 
